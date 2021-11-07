@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# Script used to package the paylaod into an installer for the EdgeRouter
+#
 export COPY_EXTENDED_ATTRIBUTES_DISABLE=true
 export COPYFILE_DISABLE=true
 
