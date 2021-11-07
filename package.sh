@@ -4,21 +4,29 @@ export COPYFILE_DISABLE=true
 
 VERSION=$(cat ./version)
 NAME='ubnt_bcast_relay'
-# DROPBOX='/Users/Neil/Dropbox/EdgeMax'
 BCAST="${NAME}.${VERSION}."
 INSTALL="install_${NAME}.v${VERSION}"
 PAYLOAD='payload'
-
 if [[ -e "${0##*/}" ]]; then
 	BASEDIR="$(pwd)"
-	[[ -f ${BCAST}setup.tgz ]] && rm ${BCAST}setup.tgz
-	cd ${PAYLOAD}
+	mkdir -p ./build
+	mkdir -p ./build/payload
+
+	if [ ! -f ./build/udp-bcast-relay ]; then
+		echo "Must run make before"
+		exit 1
+	fi
+	cp -r ./src/${PAYLOAD} ./build
+
+	mkdir -p ./build/payload/binaries
+	cp ./build/udp-bcast-relay ./build/payload/binaries/
+	cd ./build/payload/
 	echo ${VERSION} > version
 	tar zcf ../${PAYLOAD}.tgz --exclude='._*' --exclude='.svn' --exclude='.DS_Store' --exclude='*.bak' --exclude='*~' ./*
 	cd ..
 
 	if [[ -e ${PAYLOAD}.tgz ]]; then
-		cat decompress ${PAYLOAD}.tgz > ${INSTALL}
+		cat ../src/decompress.sh ${PAYLOAD}.tgz > ${INSTALL}
 	else
 		echo "${PAYLOAD}.tgz does not exist"
 		exit 1
@@ -26,12 +34,8 @@ if [[ -e "${0##*/}" ]]; then
 
 	chmod 0755 ${INSTALL}
 	tar zcf ${INSTALL}.tgz ${INSTALL}
+	# rm ${PAYLOAD}.tgz
 	echo "${INSTALL} created"
-	# [[ -d "${DROPBOX}/" ]] && install -m 0755 ${INSTALL}.tgz "${DROPBOX}/"
-	tar -zcf ../${BCAST}setup.tgz --exclude='._*' --exclude='.svn' --exclude='.DS_Store' --exclude='*.bak' --exclude='*~' "${BASEDIR}"/*
-	mv ../${BCAST}setup.tgz "${BASEDIR}"/
-
-	[[ ${1} ]] && /usr/bin/scp "${BASEDIR}"/${INSTALL} ${1}@scratch:/tmp/${INSTALL}
 else
 	echo "$(basename $0) must be run in the directory where it is located."
 fi
