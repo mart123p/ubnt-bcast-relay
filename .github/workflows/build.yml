@@ -1,0 +1,42 @@
+name: Build udp-broadcast-relay for ubnt
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  RELEASE_VERSION: v1.2
+
+jobs:
+  headers:
+    runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/ubnt-build:${{ matrix.image }}
+
+    strategy:
+      matrix:
+        device: [e100, e200, e300, e1000, ugw3, ugw4, ugwxg]
+        image: [octeon]
+        toolchain: [mips64-unknown-linux-uclibc]
+        include:
+          - device: e50
+            image: mipsel
+            toolchain: mipsel-unknown-linux-uclibc
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      - name: Build udp-broadcast-relay
+        run: |
+          CC=/root/x-tools/${{ matrix.toolchain }}/bin/${{ matrix.toolchain }}-gcc make
+          ./package.sh
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ubnt_bcast_relay-${{ matrix.image }}.${{ env.RELEASE_VERSION }}.tgz
+          path: build/install_ubnt_bcast_relay.v1.2.tgz
