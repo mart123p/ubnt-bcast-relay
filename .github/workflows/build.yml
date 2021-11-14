@@ -17,12 +17,10 @@ jobs:
 
     strategy:
       matrix:
-        device: [e100, e200, e300, e1000, ugw3, ugw4, ugwxg]
         image: [octeon]
         toolchain: [mips64-unknown-linux-uclibc]
         include:
-          - device: e50
-            image: mipsel
+          - image: mipsel
             toolchain: mipsel-unknown-linux-uclibc
 
     steps:
