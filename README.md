@@ -1,5 +1,7 @@
 # [Multicast, Sonos, Phorus & Play-Fi Broadcast 255.255.255.255:<port> Discovery Solution](https://community.ubnt.com/t5/EdgeMAX/Multicast-Sonos-Phorus-amp-Play-Fi-Broadcast-255-255-255-255-lt/td-p/1259616)
 
+This repository is a fork of britannic's repository [ubnt-bcast-relay](https://github.com/britannic/ubnt-bcast-relay). The changes made to the repository are mainly focused on improving the build process. Some of the CI was inspired by [Wiguard for Ubiquity devies](https://github.com/WireGuard/wireguard-vyatta-ubnt). 
+        
 ## Licenses
 
 * GNU General Public License, version 3
@@ -34,7 +36,7 @@ YMMV and of course, there is always a risk using any non Ubiquiti approved/test 
 
 * upload install_ubnt_bcast_relay.v1.2 to your router
 
-        curl -Lo /tmp/install_ubnt_bcast_relay.v1.2.tgz https://github.com/britannic/ubnt-bcast-relay/raw/master/install_ubnt_bcast_relay.v1.2.tgz 
+        curl -Lo /tmp/install_ubnt_bcast_relay.v1.2.tgz https://github.com/mart123p/ubnt-bcast-relay/releases/download/v1.2-ci/ubnt_bcast_relay-octeon.v1.2.tgz
         cd /tmp
         sudo tar zxvf ./install_ubnt_bcast_relay.v1.2.tgz
         sudo bash ./install_ubnt_bcast_relay.v1.2
