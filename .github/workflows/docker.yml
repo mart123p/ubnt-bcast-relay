@@ -13,20 +13,17 @@ jobs:
     strategy:
         matrix:
           tag: [mipsel, octeon]
-          type: [kernel]
     env:
-      IMAGE: ghcr.io/${{ github.repository_owner }}/ubnt-build:${{ matrix.tag }}-${{ matrix.type }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/ubnt-build:${{ matrix.tag }}
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build kernel environment
-        if: ${{ matrix.type == 'kernel' }}
-        run: docker build --pull -t "$(echo $IMAGE | tr '[:upper:]' '[:lower:]')" -f ci/${{ matrix.tag }}/Dockerfile .
+      - name: Build toolchain environment
+        run: cd ci/${{ matrix.tag }} && docker build --pull -t "$(echo $IMAGE | tr '[:upper:]' '[:lower:]')" .
 
       - name: Log into GitHub Container Registry
-      # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
-        run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: docker push "$(echo $IMAGE | tr '[:upper:]' '[:lower:]')"
