@@ -10,7 +10,7 @@ env:
   RELEASE_VERSION: v1.2
 
 jobs:
-  headers:
+  build:
     runs-on: ubuntu-20.04
     container:
       image: ghcr.io/${{ github.repository_owner }}/ubnt-build:${{ matrix.image }}
