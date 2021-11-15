@@ -1,6 +1,6 @@
 # [Multicast, Sonos, Phorus & Play-Fi Broadcast 255.255.255.255:<port> Discovery Solution](https://community.ubnt.com/t5/EdgeMAX/Multicast-Sonos-Phorus-amp-Play-Fi-Broadcast-255-255-255-255-lt/td-p/1259616)
 
-This repository is a fork of britannic's repository [ubnt-bcast-relay](https://github.com/britannic/ubnt-bcast-relay). The changes made to the repository are mainly focused on improving the build process. Some of the CI was inspired by [Wiguard for Ubiquity devies](https://github.com/WireGuard/wireguard-vyatta-ubnt). 
+This repository is a fork of britannic's repository [ubnt-bcast-relay](https://github.com/britannic/ubnt-bcast-relay). The changes made to the repository are mainly focused on improving the build process. Some of the CI was inspired by [WireGuard for Ubiquity devies](https://github.com/WireGuard/wireguard-vyatta-ubnt). 
         
 ## Licenses
 
